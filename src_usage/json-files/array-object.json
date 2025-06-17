@@ -1,0 +1,6 @@
+[
+  { "id": 1, "wert": "eins" },
+  { "id": 2, "wert": "zwei" },
+  { "id": 3, "wert": "drei" },
+  { "idHonk": 4, "gross": true }
+]

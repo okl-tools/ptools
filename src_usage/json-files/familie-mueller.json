@@ -1,0 +1,39 @@
+{
+  "name":
+  "Müller",
+  
+  "Vater":
+  {
+    "vorName": "Johann",
+    "hobby": "wandern",
+    "alter": 47,
+    "gross" : true
+  },
+  
+  "Mutter":
+  {
+    "vorName": "Maria",
+    "hobby": "stricken",
+    "alter": 45,
+    "gross" : true
+  },
+  
+  "Kinder":
+  [
+    {
+      "vorName": "Bert",
+      "hobby": "Fußball",
+      "alter": 12
+    },
+    {
+      "vorName": "Anne",
+      "hobby": "lesen",
+      "alter": 9
+    },
+    {
+      "vorName": "ZoffelToffel",
+      "hobby": "rumZoffeln",
+      "alter": 19
+    }
+  ]
+}

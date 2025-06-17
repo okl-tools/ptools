@@ -1,0 +1,23 @@
+{
+  "name":  "Stegemann",
+  
+  "Vater":
+  {
+    "vorName": "Jürgen",
+    "hobby": "Klettern",
+    "alter": 48,
+    "Fahrzeug":
+    {
+      "farbe": "rot",
+      "PS": 123
+    }
+  },
+  
+  "Mutter":
+  {
+    "vorName": "Lena",
+    "hobby": "Malen",
+    "alter": 44
+  }
+  
+}

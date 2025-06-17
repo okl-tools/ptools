@@ -1,0 +1,47 @@
+{
+  "name":  "Stegemann",
+  
+  "Vater":
+  {
+    "vorName": "Jürgen",
+    "hobby": "Klettern",
+    "alter": 48,
+    "Fahrzeug":
+    {
+      "farbe": "rot",
+      "PS": 123
+    }
+  },
+  
+  "Mutter":
+  {
+    "vorName": "Lena",
+    "hobby": "Malen",
+    "alter": 44
+  },
+  
+  "Kinder":
+  [
+    {
+      "vorName": "Franz",
+      "hobby": "Schwimmen",
+      "alter": 14,
+      "Fahrad" :
+      {
+        "reifenGroesse": 28,
+        "farbe" : "rot"
+      }
+    },
+    {
+      "vorName": "Sophie",
+      "hobby": "Klavier spielen",
+      "alter": 11,
+      "Instrumente" : ["Gitarre", "Klavier", "Geige", "Violine", "Klarinette"]
+    },
+    {
+      "vorName": "Mäx",
+      "hobby": "Fußball",
+      "alter": 8
+    }
+  ]
+}

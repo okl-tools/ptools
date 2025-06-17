@@ -1,0 +1,9 @@
+{
+  "person": {
+    "name": "Bärbel",
+    "adresse": {
+      "stadt": "München",
+      "plz": 80331
+    }
+  }
+}

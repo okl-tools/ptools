@@ -1,0 +1,10 @@
+{
+  "name": "Stegemann",
+  "vater": { "vorName": "Jürgen", "hobby": "Klettern", "alter": 48 },
+  "mutter": { "vorName": "Lena", "hobby": "Malen", "alter": 44 },
+  "kinder": [
+    { "vorName": "Franz", "hobby": "Schwimmen", "alter": 14 },
+    { "vorName": "Sophie", "hobby": "Klavier", "alter": 11 },
+    { "vorName": "Mäx", "hobby": "Fußball", "alter": 8 }
+  ]
+}
