@@ -163,7 +163,7 @@ namespace ptools
         }
 
         bool flagWriteTrailer = true;
-        bool flagWriteTime = false;
+        bool flagWriteTime = true;
     };
 
     struct PWriterUArt : PWriterGeneric, PTrailer

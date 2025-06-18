@@ -32,12 +32,12 @@ namespace ptools
             p = strcat_end(buf_trailler, ",");
 
             p = number_to_ascii(time.msec, p, 3);
-    }
+        }
 
 
 #if defined(CORTEX_M7_NETX_DUO) || defined(CORTEX_M7_FREE_RTOS) || defined(H7_FREE_RTOS)
         p = strcat_end(p, "][");
-        p = number_to_ascii(get_thread_ID(), p, 4);
+        p = number_to_ascii(get_thread_ID(), p, 9);
         p = strcat_end(p, "] ");
 #else
         p = strcat_end(p, "] ");
