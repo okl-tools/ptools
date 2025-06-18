@@ -42,7 +42,7 @@ It'a obvious that we can allocate and free mem. So far so good.<br/>
 C++ mechanism "placement new" allows us to have something like **new**/**delete** in deterministic manner. 
 Some lines of code show us how to use. 
 
-<pre> ```
+<pre> 
 ObjectMemPoolWrapper<16, 100, 100> globObjMem; // we have a global pool with blocksize 16, 100 blocks and 100 objects
 
 
@@ -80,17 +80,18 @@ int main ()
     //test_basic_types(globObjMem); // or shorter, ObjectMemPoolWrapper has a conversion operator
     return 0;
 }
-``` </pre>
+
+</pre>
 creates this output (columns: number, time, [threadID] )
 
-<pre> ```
+<pre> 
 [000001] [00:00:00,000] a:100
 [000002] [00:00:00,000] b:200
 [000003] [00:00:00,300] c:3.14
 [000004] [00:00:00,300] d:10 goats on the hill enjoying grass
 [000005] [00:00:00,300] 'hill' found at pos:16
 [000006] [00:00:00,400] name is:Conrad
-``` </pre>
+</pre>
 
 
 ## void pp (...) - power print
@@ -100,7 +101,7 @@ The ptools started with power print. I wrote my favorite logger and continued ..
 pp works with variadic template mechanism.
 pp is type safe and very easy to handle. 
 output goes to console or to embedded UART interface. 
-<pre> ```
+<pre>
 
 pp(); // empty line
 pp("hello");
@@ -122,7 +123,7 @@ Color colRed{255,0,0,255};
 
 pp("color is:$", colRed); 
 
-``` </pre>
+</pre>
 
 
 

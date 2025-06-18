@@ -31,11 +31,8 @@ namespace ptools
         void freeHandleMemory (HandleMemory handle) override;
 
         int32_t get_block_size () const override;
-
         int32_t get_max_blocks () const override;
-
         int32_t get_total_memsize () const;
-
         int32_t get_max_mem_free () const override;
         int32_t get_max_blocks_free () const override;
 
@@ -46,9 +43,7 @@ namespace ptools
 
 
         bool is_error_state () const override;
-
         int32_t get_last_error () const override;
-
         void clear_error () const override;
 
         void clear() override;
@@ -70,31 +65,6 @@ namespace ptools
         mutable PMutex mutexMem;
         mutable int32_t errMP = ERR_NO_ERROR;
     };
-
-//
-//    template<
-//            uint32_t BLOCK_SIZE,
-//            uint32_t BLOCK_COUNT,
-//            uint32_t OBJECTS_COUNT
-//    >
-//    struct StaticMemorySetup
-//    {
-//        static inline char buf[BLOCK_SIZE * BLOCK_COUNT] {};
-//        static inline char buf_ar[OBJECTS_COUNT * sizeof(HandleMemory)] {};
-//
-//        static ARRAY_HANDLES& handles()
-//        {
-//            static ARRAY_HANDLES h(buf_ar, OBJECTS_COUNT);
-//            return h;
-//        }
-//
-//        // Singleton !
-//        static IObjectMemPool & get_pool()
-//        {
-//            static ObjectMemPool p(BLOCK_SIZE, BLOCK_COUNT, buf, &handles());
-//            return p;
-//        }
-//    };
 
     //---------------------------------------------------------------------
 
