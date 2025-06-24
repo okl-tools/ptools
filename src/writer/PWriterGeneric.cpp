@@ -1,12 +1,12 @@
 #include "PWriter.h"
 #include "pp.h"
 
-#include <iostream>
 
 using namespace std;
 
 namespace ptools
 {
+
     void PWriterGeneric::set_context_and_func(void* the_conn, TxFunc userFunc)
     {
         conn = the_conn;
@@ -21,6 +21,7 @@ namespace ptools
 
     PResult PWriterGeneric::write_mem (const char* buf, uint32_t sz)
     {
+        PMutexLocker locker(mutexWriter);
 
         if (txFunc && conn)
         {

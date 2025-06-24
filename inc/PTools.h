@@ -3,7 +3,7 @@
 //
 // okl, 2025 May 23
 //
-// can be used from linux and from cortex_m7
+// can be used from cortex_m7 and from linux
 //
 #pragma once
 
@@ -32,9 +32,6 @@ namespace ptools
 
     void rand_seed_by_milliseconds();
     int32_t rand_next_int(int32_t randMin=0, int32_t randMax=1000);
-
-    const char * get_program(const char * pPath);
-
 
 }
 

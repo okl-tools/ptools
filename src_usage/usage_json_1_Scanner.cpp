@@ -18,6 +18,7 @@ static void test_scan (const char * jsonText)
 
 int main (int argc, char * argv[])
 {
+    uint32_t ms = get_milliseconds();
     logWriter.flagWriteTrailer = false;
 
     if (argc != 2)
@@ -35,8 +36,12 @@ int main (int argc, char * argv[])
     else
     {
         test_scan(s.data());
-
+        //sleep_milliseconds(100);
     }
+
+    uint32_t msDiff = get_milliseconds() - ms;
+    pp("");
+    pp("within $ milli seconds", msDiff);
 
     return 0;
 }

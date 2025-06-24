@@ -1,5 +1,7 @@
 /build/
 /clion-build/
+/clion-build-debug/
+/cmake-build-debug/
 /bin/
 /lib/
 

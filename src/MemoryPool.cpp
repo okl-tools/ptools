@@ -354,20 +354,20 @@ namespace ptools
         return errMP != 0;
     }
 
-    int32_t ObjectMemPool::get_last_error () const
+    uint32_t ObjectMemPool::get_last_error () const
     {
         return errMP;
     }
 
     void ObjectMemPool::clear_error () const
     {
-        errMP = 0;
+        errMP = ERR_NO_ERROR;
     }
 
     void ObjectMemPool::clear ()
     {
         arHandles.clear();
-        errMP = 0;
+        errMP = ERR_NO_ERROR;
     }
 
 }

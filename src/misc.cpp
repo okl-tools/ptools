@@ -17,7 +17,7 @@ namespace ptools
 
         uint32_t patch ()
         {
-            return 2;
+            return 3;
         }
 
         void to_writer(PWriter & writer)
@@ -82,26 +82,5 @@ namespace ptools
         return randMin + (std::rand() % range);
     }
 
-    // /cppDev/E/test_ptools/clion-build/json2
-    const char * get_program (const char * pPath)
-    {
-        if (pPath == nullptr)
-        {
-            return "nullptr";
-        }
-
-        const char * p = pPath  + string_len(pPath);
-
-        while (p > pPath)
-        {
-            if (*p == '/' || *p== '\\')
-            {
-                return p+1;
-            }
-            p--;
-        }
-
-        return pPath;
-    }
 
 }

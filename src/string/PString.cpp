@@ -153,53 +153,6 @@ namespace ptools
     }
 
 
-    bool PString::reserve_exact (uint32_t newCap)
-    {
-//        pp("PString::reserve* $ bytes", newCap);
-
-        if (pool->is_error_state())
-        {
-            return false;
-        }
-
-        if (newCap <= cap)
-        {
-            return true;
-        }
-
-        uint32_t newSize = newCap;
-
-        int blocksNeed = newSize / pool->get_block_size();
-        if ((newSize % pool->get_block_size()) > 0)
-        {
-            blocksNeed++;
-        }
-
-        newSize = blocksNeed * pool->get_block_size();
-
-
-        char * newData = static_cast<char *>(pool->blocks_alloc(blocksNeed));
-        if (!newData)
-        {
-            pp("PString::reserve_exact - newData == nullptr");
-            return false;
-        }
-
-        memset(newData, 0, newSize);
-
-        if (data)
-        {
-            memcpy(newData, data, cap);
-            pool->free_object(data);
-        }
-
-
-        data = newData;
-        cap = newSize;
-        data[len] = 0;
-
-        return true;
-    }
 
     bool PString::reserve (uint32_t newCap)
     {
@@ -217,14 +170,8 @@ namespace ptools
 //        pp("PString::reserve* $ bytes", newCap);
 
 
-//        uint32_t newSize = (newCap + 15) & ~15; // nächstes 16er-Multiple
+//        uint32_t newSize = (newCap + 15) & ~15; // next 16er-Multiple
         uint32_t newSize = newCap + 1;
-//        pp("PString::reserve, newSize:$", newSize);
-//        pp(4, "PString::reserve, <<<$>>>", data);
-
-//        newSize += 1; // to have a c_string '\0'
-//        newSize += 4; // to have a c_string '\0'
-//        newSize += 1; // to have a c_string '\0'
 
         int blocksNeed = newSize / pool->get_block_size();
         if ((newSize % pool->get_block_size()) > 0)
@@ -396,10 +343,25 @@ namespace ptools
         return *this;
     }
 
-//    PString::PString (const char * pStr)
-//    {
-//
-//    }
+    bool PString::insert_at (uint32_t posAt, const char * pPart, uint32_t countChars)
+    {
+        if (reserve(size() + countChars))
+        {
+            len += countChars;
+            return string_insert((char *) get_data(), posAt, pPart, countChars);
+        }
+        return false;
+    }
+
+    uint32_t PString::get_pos () const
+    {
+        return len;
+    }
+
+    void PString::set_pos (uint32_t pos)
+    {
+        len = pos;
+    }
 
 
 }

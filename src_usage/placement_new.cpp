@@ -65,7 +65,6 @@ struct A
 
 int main ()
 {
-    pp("main_placement_new::main");
     A * a = create_object_without_heap<A>();  // everything ok !
     pp("Address of a:$", (const void *) a);
     a->x = 99; // everything ok !

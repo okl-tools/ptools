@@ -17,9 +17,12 @@ namespace ptools
     {
         virtual const char * get_data () const = 0;
         virtual uint32_t size () const = 0;
+        virtual uint32_t get_pos () const = 0;
+        virtual void set_pos (uint32_t pos)  = 0;
 
         bool starts_with (const char * pPart) const;
         bool contains (const char * pPart) const;
+
 
         // find ....
         int32_t find (const char * pSearch) const;
@@ -56,6 +59,7 @@ namespace ptools
 
         bool equals (const char * pStr, uint32_t lenStr = MAX_UINT32) const;
         bool equals_ignore_case (const char * pStr, uint32_t lenStr = MAX_UINT32) const;
+
         bool equals (const PStringView & view) const;
         bool equals_ignore_case (const PStringView & view) const;
 
@@ -76,6 +80,9 @@ namespace ptools
         PStringView (const char * mem, BORDER border);
         PStringView (const PString & s, BORDER border);
 
+        uint32_t get_pos () const override{return 0;}
+        void set_pos (uint32_t pos) override {}
+
 
         operator bool () const;
 
@@ -93,12 +100,22 @@ namespace ptools
         uint32_t size () const override;
 
         const char * get_data () const override;
+    };
 
+    struct AbstractModifyableString : AbstractString
+    {
+        virtual bool insert_at(uint32_t posAt, const char *pPart, uint32_t partLen) ;
+        virtual bool reserve (uint32_t newCap){return true;}
+
+        bool remove_chars(uint32_t pos, uint32_t countChars=1);
+        bool remove_first_found_char(uint32_t pos, char ch);
+        void remove_from_end_CRLF(); // ?? replace by zeros ?
 
     };
 
+
     //-------------------------------------------------------
-    struct PString : PWriter, AbstractString
+    struct PString : PWriter, AbstractModifyableString
     {
         friend IObjectMemPool;
 
@@ -126,10 +143,7 @@ namespace ptools
 
         operator bool () const;
 
-        operator const char * () const
-        {
-            return to_string();
-        }
+        operator const char * () const;
 
         static PString * create (IObjectMemPool * f);
 
@@ -140,11 +154,12 @@ namespace ptools
         const char * get_data () const override; // can return null !
 
         PResult write_mem (const char * pChars, uint32_t countChars);
+        bool insert_at(uint32_t posAt, const char *pPart, uint32_t partLen) override;
 
 
         // ideal for tokenizer, token should be derived from PStringView .. see usage in Node.cpp / internal struct "JToken"
         template<typename T>
-        T get_view (uint32_t posFrom = 0, uint32_t countChars = MAX_UINT32) const
+        T create_view (uint32_t posFrom = 0, uint32_t countChars = MAX_UINT32) const
         requires DERIVED<T, PStringView>;
 
 
@@ -158,7 +173,6 @@ namespace ptools
         bool assign (const char * str);
         bool append (const char * str);
 
-        // compare
         bool operator== (const PString & s) const;
         bool operator== (const char * pStr) const;
 
@@ -166,49 +180,21 @@ namespace ptools
         uint32_t size () const override;
         uint32_t capacity () const;
 
-        bool reserve (uint32_t newCap);
-        bool reserve_exact (uint32_t newCap);
+        bool reserve (uint32_t newCap) override;
 
 
         IObjectMemPool * get_pool ();
+
+        uint32_t get_pos () const override;
+        void set_pos (uint32_t pos) override;
+
 
     protected:
         char * data = nullptr;
         uint32_t len = 0;
         uint32_t cap = 0;
         IObjectMemPool * pool = nullptr;
-
     };
-
-    inline PString * IObjectMemPool::create_PString (const char * pStr)
-    {
-        PString * s = create_object<PString>();
-        if (s)
-        {
-            s->set_obj_mem_pool(this);
-            if (pStr)
-            {
-                s->write_cstring(pStr);
-            }
-        }
-
-        return s;
-    }
-
-
-    template<typename T, typename... ARGS>
-    inline PString * IObjectMemPool::create_PString (const char * format, const T & value, const ARGS... args)
-    {
-        PString * s = create_object<PString>();
-        if (s)
-        {
-            s->set_obj_mem_pool(this);
-            s->sprintF(format, value, args ...);
-        }
-
-        return s;
-    }
-
 
 }
 

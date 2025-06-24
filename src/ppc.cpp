@@ -131,6 +131,20 @@ void ppIP (uint32_t ip)
     ptools::pp("IP:$.$.$.$", i0, i1, i2, i3);
 }
 
+void ppIP_bytes(uint8_t * p)
+{
+    if (p)
+    {
+        uint32_t i3 = p[3];
+        uint32_t i2 = p[2];
+        uint32_t i1 = p[1];
+        uint32_t i0 = p[0];
+
+        ptools::pp("IP:$.$.$.$", i0, i1, i2, i3);
+    }
+}
+
+
 
 void write_debug (const char * pStr)
 {
@@ -172,11 +186,6 @@ void pp_print_buf (const char * pBuf, uint32_t buflen)
     }
 
 
-}
-
-uint32_t pp_time_ms ()
-{
-    return get_milliseconds();
 }
 
 

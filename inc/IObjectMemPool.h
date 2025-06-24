@@ -93,8 +93,7 @@ namespace ptools
 
         }
 
-
-        PString * create_PString (const char * pStr);
+        PString * create_PString (const char * pStr); // for convience ony, it's the same like:  create_object<PString>() + call of set_obj_mem_pool
 
         template<typename T, typename... ARGS>
         PString * create_PString (const char * format, const T & value, const ARGS... args);
@@ -109,9 +108,8 @@ namespace ptools
         virtual void show_info (uint32_t space = 0, SHOW show = SHOW::BASIC) const = 0;
         virtual int32_t show_blocks () const = 0;
 
-        // errors are always negative !
         virtual bool is_error_state () const = 0;
-        virtual int32_t get_last_error () const = 0;
+        virtual uint32_t get_last_error () const = 0;
         virtual void clear_error () const = 0;
         virtual const char * error_as_string () const = 0;
         virtual void clear () = 0;
@@ -157,16 +155,6 @@ namespace ptools
                 return HandleMemory{nullptr, ERR_ALLOC};
             }
 
-            //SET_OBJ_MEM_POOL
-
-//            if constexpr (SET_OBJ_MEM_POOL<T>)
-//            {
-//                t.set_obj_mem_pool(this);
-//                //pp(space, "[$]=$", index, t);
-//            }
-
-
-            // object construction
             return HandleMemory{new(ptr) T(std::forward<Args>(args)...), countBlocks};
         }
 

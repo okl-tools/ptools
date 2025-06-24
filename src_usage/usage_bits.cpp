@@ -56,10 +56,6 @@ static void test_bits_font ()
 
 int main ()
 {
-//    logWriter.flagWriteTrailer = false;
-    logWriter.flagWriteTime = true;
-    pp("ptools version $.$.$", version::major(), version::minor(), version::patch());
-    sleep_milliseconds(300);
     test_bits_font();
 
     return 0;

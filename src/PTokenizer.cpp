@@ -55,13 +55,13 @@ namespace ptools
                 {
                     if (tokenPos < delimPos)
                     {
-                        arToks.push_back(sLineTokens.get_view<PToken>(pos, delimPos - pos));
+                        arToks.push_back(sLineTokens.create_view<PToken>(pos, delimPos - pos));
                     }
                 }
 
                 if (delimiterMode == DELIMITER_MODE::KEEP_DELIMITER)
                 {
-                    PToken tok = sLineTokens.get_view<PToken>(delimPos, 1);
+                    PToken tok = sLineTokens.create_view<PToken>(delimPos, 1);
                     tok.bits.set_flag(PToken::TOK_TYPE::DELIMITER); // set multi purpose user bits ....
                     arToks.push_back(tok);
                 }
@@ -72,7 +72,7 @@ namespace ptools
             {
                 if (tokenPos >=0)
                 {
-                    arToks.push_back(sLineTokens.get_view<PToken>(pos));
+                    arToks.push_back(sLineTokens.create_view<PToken>(pos));
                 }
                 break;
             }

@@ -19,10 +19,9 @@ namespace ptools
 
 
         void * blocks_alloc (int countBlocks = 1) override;
-        void * alloc (int countBytes) override; // will mostly allocate more bytes as need
+        void * alloc (int countBytes) override; // will allocate more bytes as need normally
 
         int32_t count_mem_used () const;
-
 
         void free_object (void * pObject) override;
 
@@ -36,26 +35,20 @@ namespace ptools
         int32_t get_max_mem_free () const override;
         int32_t get_max_blocks_free () const override;
 
+        void show_info (uint32_t space = 0, SHOW show = SHOW::BASIC) const override;
         int32_t show_blocks () const override;
 
-
-        void show_info (uint32_t space = 0, SHOW show = SHOW::BASIC) const override;
-
-
         bool is_error_state () const override;
-        int32_t get_last_error () const override;
+        uint32_t get_last_error () const override;
         void clear_error () const override;
 
-        void clear() override;
+        void clear() override; // releases all handles and reset err variable to ERR_NO_ERROR ( which is 0 )
 
         const char * error_as_string () const override;
 
-
     private:
 
-
         int32_t find_consecutive_blocks (int countBlocks);
-
 
     private:
         const int32_t BLOCK_SIZE;
@@ -63,7 +56,7 @@ namespace ptools
         char * pMemAll = nullptr;
         ARRAY_HANDLES & arHandles;
         mutable PMutex mutexMem;
-        mutable int32_t errMP = ERR_NO_ERROR;
+        mutable uint32_t errMP = ERR_NO_ERROR;
     };
 
     //---------------------------------------------------------------------

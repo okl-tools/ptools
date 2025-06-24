@@ -209,14 +209,14 @@ namespace ptools
 
     char * float_to_ascii (float val, char * str, uint32_t decimals)
     {
-        // Vorzeichen behandeln
+        // treat sign
         if (val < 0.0f)
         {
             *str++ = '-';
             val = -val;
         }
 
-        // Rundung vorbereiten: z.B. bei 2 Nachkommastellen → +0.005
+        // prepare rounding
         float rounding = 0.5f;
         for (uint32_t i = 0; i < decimals; ++i)
         {
@@ -224,13 +224,13 @@ namespace ptools
         }
         val += rounding;
 
-        // Ganzzahliger Teil
+        // number
         int intPart = static_cast<int>(val);
         str = number_to_ascii(intPart, str);
 
         *str++ = '.';
 
-        // Nachkommateil
+        // after comma
         float frac = val - intPart;
         for (uint32_t i = 0; i < decimals; ++i)
         {
@@ -261,7 +261,7 @@ namespace ptools
             return NULL;
         }
 
-        // Beginne rückwärts durch den String zu iterieren
+        // start iterating backwards
         const char* p = pStr + lenStr - lenFind;
 
         while (p >= pStr)
@@ -286,7 +286,7 @@ namespace ptools
 
         const char* pLast = NULL;
 
-        // Manuell bis zum Nullterminator laufen
+        // back to null terminator
         const char* p = pStr;
         while (*p)
         {
@@ -303,7 +303,6 @@ namespace ptools
         }
 
 
-        // Jetzt rückwärts suchen
         while (p >= pStr)
         {
             if (*p == ch)
@@ -316,6 +315,61 @@ namespace ptools
         return NULL;
     }
 
+    bool string_remove_chars(char * pStr, uint32_t pos, uint32_t countChars)
+    {
+        if (pStr == nullptr)
+        {
+            return false;
+        }
+
+        uint32_t len = strlen(pStr);
+
+        if (pos >= len)
+        {
+            return false;
+        }
+
+        if (countChars == 0)
+        {
+            return true; // nothing, but valid
+        }
+
+        if (pos + countChars >= len)
+        {
+            // Einfach am Ende terminieren
+            pStr[pos] = '\0';
+        }
+        else
+        {
+            // move memory to front
+            memmove(&pStr[pos], &pStr[pos + countChars], len - (pos + countChars) + 1); // + \0
+        }
+
+        return true;
+    }
+
+    bool string_insert(char *pStr, uint32_t posAt, const char *pPart, uint32_t countChars)
+    {
+        if (!pStr || !pPart)
+        {
+            return false;
+        }
+
+        uint32_t lenStr = strlen(pStr);
+
+        if (posAt > lenStr)
+        {
+            return false;
+        }
+
+        // move Rest to right to make space
+        memmove(pStr + posAt + countChars, pStr + posAt, lenStr - posAt + 1); // +1 for '\0'
+
+        // insert new chars
+        memcpy(pStr + posAt, pPart, countChars);
+
+        return true;
+    }
 
 }
 

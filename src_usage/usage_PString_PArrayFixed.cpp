@@ -50,7 +50,6 @@ static void do_some_pstring_stuff (IObjectMemPool & pool)
 
 static void write_abc (PString & s, int countChars)
 {
-//    s.reserve_exact(countChars+1);
     char ch = 'A';
     for (int i = 0; i < countChars; i++)
     {

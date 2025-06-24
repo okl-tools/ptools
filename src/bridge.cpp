@@ -24,14 +24,6 @@ void set_hal_time (int flag)
 }
 
 
-void write_string_buf (const char * pStr)
-{
-    if (pStr)
-    {
-        HAL_UART_Transmit(&huart3, (uint8_t *) pStr, strlen(pStr), HAL_MAX_DELAY);
-    }
-}
-
 uint32_t get_milliseconds ()
 {
     if (flagHalTime)
@@ -67,25 +59,6 @@ void init_uart_mutex(void)
     uart_mutex = xSemaphoreCreateMutex();
 }
 
-void write_string_buf(const char *pStr)
-{
-    if (!pStr)
-        return;
-
-    if (uart_mutex)
-    {
-        if (xSemaphoreTake(uart_mutex, portMAX_DELAY) == pdTRUE)
-        {
-            HAL_UART_Transmit(&huart3, (uint8_t *)pStr, strlen(pStr), HAL_MAX_DELAY);
-            xSemaphoreGive(uart_mutex);
-        }
-    }
-    else
-    {
-        // Fallback (nicht thread-safe!)
-        HAL_UART_Transmit(&huart3, (uint8_t *)pStr, strlen(pStr), HAL_MAX_DELAY);
-    }
-}
 
 uint32_t get_milliseconds ()
 {
@@ -125,13 +98,6 @@ void set_hal_time (int flag)
 }
 
 
-void write_string_buf (const char * pStr)
-{
-    if (pStr)
-    {
-        HAL_UART_Transmit(&huart3, (uint8_t *) pStr, strlen(pStr), HAL_MAX_DELAY);
-    }
-}
 
 uint32_t get_milliseconds ()
 {
@@ -156,15 +122,6 @@ extern UART_HandleTypeDef hcom_uart[COMn];
 
 //UART_HandleTypeDef & huart3 = hcom_uart[COMn];
 
-void write_string_buf (const char * pStr)
-{
-    if (pStr)
-    {
-//        HAL_UART_Transmit(&huart3, (uint8_t *) pStr, strlen(pStr), HAL_MAX_DELAY);
-//        HAL_UART_Transmit(&hcom_uart[COM1], (uint8_t *) pStr, strlen(pStr), HAL_MAX_DELAY);
-        HAL_UART_Transmit(&hcom_uart[COM1], (uint8_t *) pStr, ptools::string_len(pStr), HAL_MAX_DELAY);
-    }
-}
 
 uint32_t get_milliseconds ()
 {
@@ -204,14 +161,6 @@ void set_hal_time (int flag)
     flagHalTime = flag;
 }
 
-
-void write_string_buf (const char * pStr)
-{
-    if (pStr)
-    {
-        printf("%s", pStr);
-    }
-}
 
 uint32_t get_milliseconds_x()
 {

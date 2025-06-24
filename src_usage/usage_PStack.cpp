@@ -32,6 +32,7 @@ ObjectMemPoolWrapper<16, 500, 500> pool;
 
 int main ()
 {
+//    logWriter.flagWriteTime = true; // make no sense - too fast - always 0
     pool.show_info();
     test1(pool);
     pool.show_info();

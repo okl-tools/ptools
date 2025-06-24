@@ -72,6 +72,63 @@ static void test2 ()
 
 }
 
+static void test_string_del()
+{
+    PStringFixedSize<64> s;
+//    s.sprintF("Der Himmel ist blau!\r\nUnd so schön");
+//    s.sprintF("Der Himmel ist blau!\r\n");
+    s.sprintF("Das");
+
+    pp("<<<$>>>", s);
+    pp("pos:$", s.get_pos());
+
+    s.sprintF(" ABC\r\n");
+//    s.sprintF("Das ABC");
+//    s.sprintF("Das ABC");
+    //s.sprintF("");
+    //s.reset();
+
+//    pp("'$'", s);
+//    s.remove_chars(4, 10);
+//    s.remove_first_found_char(0, 'H');
+    s.remove_from_end_CRLF();
+
+    s.sprintF("MURKS\n");
+    s.remove_from_end_CRLF();
+    s.sprintF("jodel\n");
+    s.remove_from_end_CRLF();
+    pp("<<<$>>>", s);
+//    pp("$verdammt <<<$>>>, $", 1, s, 2);
+
+}
+
+static void test_construct()
+{
+    const char * pABC = "abcdefghijklmnopqrstuvwxyz";
+    PStringFixedSize<26> s1(pABC); // not all 26 letters because we need a 0 at the end of the string
+    pp("s1 <<<$>>>, size:$, capacity:$", s1, s1.size(), s1.get_capacity());
+
+    PStringFixedSize<27> s2(pABC);
+    pp("s2 <<<$>>>, size:$, capacity:$", s2, s2.size(), s2.get_capacity());
+
+    PStringFixedSize<128> s3(pABC);
+    pp("s3 <<<$>>>, size:$, capacity:$", s3, s3.size(), s3.get_capacity());
+
+}
+
+static void test_insert()
+{
+    const char * pABC = "abcdefghijklmnopqrstuvwxyz";
+    PStringFixedSize<128> s3(pABC);
+    pp("s3 <<<$>>>, size:$, capacity:$", s3, s3.size(), s3.get_capacity());
+
+    const char * pPart = "-it is hot today-";
+    s3.insert_at(3, pPart, string_len(pPart));
+
+    pp("s3 <<<$>>>, size:$, capacity:$", s3, s3.size(), s3.get_capacity());
+
+}
+
 static void testPWriterString ()
 {
     pp("main_PWriter::testPWriterString");
@@ -129,7 +186,9 @@ static void testPWriterString ()
 
 int main ()
 {
-    test2();
+//    test_string_del();
+    test_construct();
+//    test2();
 //    testPWriterString();
 
     return 0;

@@ -1,20 +1,39 @@
+// PWriter.h
+//
+// okl, 2025 June 24
+//
+// PWriter is an abstract base class which writes characters and character arrays
+//  via multiple overloaded write(..) and powerful sprintF(..)
+//  sprintF differs from C's sprintf - it has ONE type of format placeholder $ instead of %.... and is type safe
+//
+//
+// PWriter
+// |-PString
+// |-PStringFixedSize
+// |-PWriterConsole
+// |-PWriterGeneric
+//   |-PWriterSocket
+//   |-PWriterUArt
+//
+// The pp(...) logging make use of PWriterUArt in embedded context and PWriterConsole within linux
+//
+// User defined structures which has a to_writer method can be easily written
+//
+// struct A { ....void to_writer (PWriter & writer) const; ... }
+// A a;
+// pp("our a object:$", a);
+//
+// concept: "TO_WRITER"
+// This WORKS with C++ "concepts". // see concept TO_WRITER
+// The idea is to extend user defined structs with a function which is than detected during compile time for efficient code!
+//
+//
+// concept: "TO_STRING"
+// concept: "TO_PSTRING"
+// ----------------------------------------------------
+
+
 #pragma once
-
-
-#include <stdint.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct __UART_HandleTypeDef UART_HandleTypeDef;
-struct netconn;
-
-void prepare_writer (UART_HandleTypeDef * uart);
-void prepare_writer_PC ();
-
-#ifdef __cplusplus
-}
 
 
 #include <cstring>
@@ -27,9 +46,10 @@ void prepare_writer_PC ();
 #include "PFunction.h"
 #include "PFormat.h"
 #include "PResult.h"
+#include "PMutex.h"
 
 #ifdef PC_VERSION
-#include <string>
+#include <string> // linux testing only
 #endif
 
 
@@ -111,7 +131,7 @@ namespace ptools
 
         // sprintF*** family. type safe. "format" consists of what you want to be printed and $ placeholder for the objects.
         // ----------
-        void sprintF (const char * pStr); // appends formatted string
+        void sprintF (const char * pStr); // appends formatted string like - s.sprintf("value:$, height:$", 10, 4.567);
         void sprintLF (const char * format = ""); // appends formatted string + LF  ( ideal for html )
         void sprintCRLF (const char * format = ""); // appends formatted string + CR + LF ( ideal for http header)
 
@@ -140,6 +160,10 @@ namespace ptools
         TxFunc txFunc = nullptr;
 
         void set_context_and_func (void * conn, TxFunc userFunc);
+
+    protected:
+
+        PMutex mutexWriter;
     };
 
     struct PWriterSocket : PWriterGeneric
@@ -181,10 +205,20 @@ namespace ptools
 
     struct PWriterConsole : PWriter, PTrailer
     {
+        static void set_write_header(bool flagHeader=true);
+
+        PWriterConsole ();
+
         PResult write_char (char ch) override;
         PResult write_mem (const char * pChars, uint32_t sz) override;
 
         void write_trailer () override;
+
+    protected:
+        void write_header();
+
+        PMutex mutexWriter;
+
     };
 
 
@@ -231,5 +265,4 @@ namespace ptools
 
 #include "inline/PWriter_inline.h"
 
-#endif
 

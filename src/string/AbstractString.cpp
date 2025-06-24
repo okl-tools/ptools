@@ -219,7 +219,7 @@ namespace ptools
         PStringView view;
 
         int32_t pos = find(pSearch);
-        if (pos >=0)
+        if (pos >= 0)
         {
             view.mem = get_data() + pos;
             view.sz = size() - pos;

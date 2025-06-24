@@ -51,6 +51,8 @@ namespace ptools
     const char* string_find(const char* pStr, const char* pStrFind);
     const char* string_find_backwards(const char* pStr, const char* pStrFind);
     const char* string_find_backwards(const char* pStr, char ch, int32_t fromPos=-1);
+    bool string_remove_chars(char * pStr,  uint32_t pos, uint32_t countChars=1);
+    bool string_insert(char * pStr, uint32_t posAt, const char *pPart, uint32_t countChars);
 
 
     inline bool is_string(const char* c_str)

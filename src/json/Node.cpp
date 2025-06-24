@@ -391,7 +391,7 @@ namespace ptools::json
                 while (i < path.size() && path[i] != '.' && path[i] != '[')
                     ++i;
 
-                JToken key = path.get_view<JToken>(start, i - start);
+                JToken key = path.create_view<JToken>(start, i - start);
                 if (!key.empty())
                 {
                     arToks.push_back(key);
@@ -410,7 +410,7 @@ namespace ptools::json
                 }
 
 //            PStringView key = path.get_string_view(start, i - start);
-                JToken key = path.get_view<JToken>(start, i - start);
+                JToken key = path.create_view<JToken>(start, i - start);
                 key.index = key.to_int();
 
                 arToks.push_back(key);

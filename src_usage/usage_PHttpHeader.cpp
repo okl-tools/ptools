@@ -43,9 +43,9 @@ static void test_PRequest()
 
 }
 
-static void show_pstring(const char * p)
+static void show_pstring_conversion_operator(const char * p)
 {
-    pp("show_pstring, p <<<$>>>", p);
+    pp("show_pstring_conversion_operator, p <<<$>>>", p);
 }
 
 static void test_http_header(IObjectMemPool & pool)
@@ -65,7 +65,7 @@ static void test_http_header(IObjectMemPool & pool)
 
     if (ext.is_file_extension("htm", "html"))
     {
-        pp("aha, html page");
+        pp("yes, html page");
     }
     else
     {
@@ -76,7 +76,7 @@ static void test_http_header(IObjectMemPool & pool)
 
     pp("ps, req <<<$>>>", ps);
 
-    show_pstring(ps);
+    show_pstring_conversion_operator(ps);
 
 
     pool.show_info();

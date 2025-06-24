@@ -13,7 +13,6 @@
 
 
 #include <string>
-//#include <iostream>
 #include <sstream>
 #include <fstream>
 
@@ -45,4 +44,27 @@ inline void to_file(const std::string& sFile, const std::string& sContents)
     out << sContents;
     out.close();
 }
+
+const char * get_program (const char * pPath)
+{
+    if (pPath == nullptr)
+    {
+        return "nullptr";
+    }
+
+//    const char * p = pPath  + string_len(pPath);
+    const char * p = pPath  + strlen(pPath);
+
+    while (p > pPath)
+    {
+        if (*p == '/' || *p== '\\')
+        {
+            return p+1;
+        }
+        p--;
+    }
+
+    return pPath;
+}
+
 
