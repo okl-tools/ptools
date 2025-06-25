@@ -1,5 +1,8 @@
-# ptools - power tools - v0.42
+# ptools - power tools - v0.43
 ### C++ 20 power tools for embedded and linux
+
+Branch **dev** - devlopment.
+Wrapping more and more old C stuff...
 
 Bringing modern C++20 to bare metal or RTOS-based embedded systems is challenging.
 ptools' aim is make a bridge between raw C power and modern C++.
